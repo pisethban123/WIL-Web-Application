@@ -3,21 +3,22 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import "dotenv/config";
 import express from "express";
-/**
- * CORS allow cross-origin requests from frontend
- * Backend run on 3001 and frontend run on 3000
- */
 import cors from "cors";
-
-const authRoutes = require("./routes/auth");
-const userControllers = require("./src/controllers/user");
+import authRoutes from "./src/routes/auth.js"; // Import the auth routes
+import { registerUser, findUser } from "./src/controllers/authController.js"; // Import specific functions
+import connectDB from "./src/config/db.js";
 
 const app = express();
 
+connectDB();
+
+// Middleware
 app.use(cors());
+app.use(express.json()); // Middleware to parse JSON request bodies
 
-app.use("/api", authRoutes);
-//User
-app.post("/api/createUser", userControllers.createUser); // Use the createUser function as middleware for the createUser route
+// Routes
+app.use("/api", authRoutes); // Use auth routes
 
-export default app;
+
+
+export default app; // Export the app for use in other files

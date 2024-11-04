@@ -1,8 +1,9 @@
-const express = require('express');
-const { registerUser, findUser } = require('../controllers/authController'); // Ensure correct import
+import express from 'express'; // Correct ES module import
+import { registerUser, findUser } from '../controllers/authController.js'; // Ensure correct import
+
 const router = express.Router();
 
-router.post('/register', registerUser);
-router.get('/find/:username', findUser); // Add the route for finding a user
+router.post('/register', registerUser); // Route to register a user
+router.get('/find/:username', findUser); // Route to find a user by username
 
-module.exports = router;
+export default router; // Export the router

@@ -1,10 +1,10 @@
-const User = require('../models/user'); // Ensure you're importing the User model
+import User from '../models/user.js'; // Ensure you're importing the User model correctly
 
 // Function to register a new user
-exports.registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
     try {
         const { username, password, email } = req.body; // Assuming you're sending these in the body
-        const newUser = new User({ username, password});
+        const newUser = new User({ username, password, email }); // Include email if necessary
         await newUser.save();
         res.status(201).json({ message: 'User created successfully', user: newUser });
     } catch (error) {
@@ -13,7 +13,7 @@ exports.registerUser = async (req, res) => {
 };
 
 // Function to find a user
-exports.findUser = async (req, res) => {
+export const findUser = async (req, res) => {
     try {
         const { username } = req.params; // Assuming username is passed as a URL parameter
         const user = await User.findOne({ username });
