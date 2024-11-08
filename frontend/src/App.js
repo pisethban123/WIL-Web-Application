@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import Login from "./pages/login";
 import Home from "./pages/home";
 import Register from "./pages/register";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 const App = () => {
   const [username, setUsername] = useState("");
@@ -33,52 +33,59 @@ const App = () => {
     }
   };
 
+  const theme = createTheme({
+    typography: {
+      fontFamily: ["Outfit", "sans-serif"].join(","),
+      h3: {
+        fontWeight: 600,
+      },
+    },
+  });
+
   return (
-    <div>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            isAuthenticated ? (
-              <Home username={username} onLogout={handleLogout} />
-            ) : (
-              <Login
-                onLogin={handleLogin}
-                setIsAuthenticated={setIsAuthenticated}
-              />
-            )
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            isAuthenticated ? (
-              <Login
-                onLogin={handleLogin}
-                setIsAuthenticated={setIsAuthenticated}
-              />
-            ) : (
-              <Navigate to="/" state={{ showAlert: true }} />
-            )
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            isAuthenticated ? (
+    <ThemeProvider theme={theme}>
+      <div>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? (
+                <Home username={username} onLogout={handleLogout} />
+              ) : (
+                <Login
+                  onLogin={handleLogin}
+                  setIsAuthenticated={setIsAuthenticated}
+                />
+              )
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              isAuthenticated ? (
+                <Login
+                  onLogin={handleLogin}
+                  setIsAuthenticated={setIsAuthenticated}
+                />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
+          <Route
+            path="/register"
+            element={
               <Register
                 onCreate={() => {
                   throw new Error("Function not implemented.");
                 }}
                 onLogout={handleLogout}
               />
-            ) : (
-              <Navigate to="/" state={{ showAlert: true }} />
-            )
-          }
-        />
-      </Routes>
-    </div>
+            }
+          />
+        </Routes>
+      </div>
+    </ThemeProvider>
   );
 };
 
