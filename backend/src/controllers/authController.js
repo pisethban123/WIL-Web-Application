@@ -31,7 +31,7 @@ export const loginUser = async (req, res) => {
       // In a real app, you should hash the password
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    console.log("found user");
+    //console.log("found user");
     // Successfully logged in
     return res.status(200).json({ message: "Login successful", user });
   } catch (error) {
@@ -40,4 +40,26 @@ export const loginUser = async (req, res) => {
       .status(500)
       .json({ message: "Internal server error", error: error.message });
   }
+
+  
+};
+export const logout = (req, res) => {
+  console.log("Logout request received");
+
+  // For session-based authentication
+  req.session.destroy((err) => {
+    if (err) {
+      console.log("Error destroying session:", err);
+      return res.status(500).json({ message: "Failed to logout." });
+    }
+
+    console.log("Session destroyed successfully");
+    res.clearCookie("connect.sid");  // Clear the session cookie
+  });
+
+  // For token-based authentication (JWT)
+  //res.clearCookie('token');  // Clear the token cookie
+
+  console.log("Logged out successfully");
+  res.status(200).json({ message: "Logged out successfully" });
 };

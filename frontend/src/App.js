@@ -12,7 +12,7 @@ const App = () => {
 
   useEffect(() => {
     // Check if user is authenticated (e.g., check localStorage or cookies)
-    const storedAuth = localStorage.getItem("isAuthenticated");
+    const storedAuth = sessionStorage.getItem("isAuthenticated");
     if (storedAuth === "true") {
       setIsAuthenticated(true);
     }
@@ -26,21 +26,13 @@ const App = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post("http://localhost:3001/api/logout", {
-        username: username,
-      });
-
-      if (response.status === 200) {
-        console.log("Logout successful");
+      
         setIsAuthenticated(false);
         sessionStorage.removeItem("isAuthenticated");
         navigate("/");
-      } else {
-        console.log("Logout failed");
+      } catch (error) {
+        console.error("Logout failed", error);
       }
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
   };
 
   const theme = createTheme({
