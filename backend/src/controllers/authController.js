@@ -3,9 +3,10 @@ import jwt from "jsonwebtoken";
 
 // Function to register a new user
 export const registerUser = async (req, res) => {
+  console.log('Received registration request'); 
   try {
-    const { username, password, email } = req.body; // Assuming you're sending these in the body
-    const newUser = new User({ username, password, email }); // Include email if necessary
+    const { username, password } = req.body; // Assuming you're sending these in the body
+    const newUser = new User({ username, password}); // Include email if necessary
     await newUser.save();
     res
       .status(201)
@@ -17,19 +18,23 @@ export const registerUser = async (req, res) => {
 
 // Function to find a user
 export const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+
   try {
-    const { username } = req.params; // Assuming username is passed as a URL parameter
     const user = await User.findOne({ username });
+
     if (!user) {
-      return res.status(401).json({ error: "Incorrect username" });
+      return res.status(404).json({ message: "User not found" });
     }
-    if (password !== user.password) {
-      return res.status(401).json({ error: "Incorrect password" });
+
+    if (user.password !== password) {  // In a real app, you should hash the password
+      return res.status(400).json({ message: "Invalid credentials" });
     }
-    res.status(200).json({ success: true, user });
+    console.log('found user'); 
+    // Successfully logged in
+    return res.status(200).json({ message: "Login successful", user });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Server error", details: error.message });
+    console.error("Error logging in user:", error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };

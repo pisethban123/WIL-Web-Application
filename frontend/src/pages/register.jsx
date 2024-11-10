@@ -26,8 +26,9 @@ const Register = () => {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    console.log('Form submitted');
+    e.preventDefault();
     let hasError = false;
 
     if (!username) {
@@ -63,6 +64,7 @@ const Register = () => {
 
   const handleConfirm = async () => {
     // Send the form data to the backend API
+    
     try {
       const response = await axios.post(
         "http://localhost:3001/api/register",
