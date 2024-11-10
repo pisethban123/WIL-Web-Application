@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import Button, { ButtonProps } from "@mui/material/Button";
+import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -11,7 +11,7 @@ import image from "../assets/people.jpg";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { InputAdornment, IconButton, Grid } from "@mui/material";
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(''); 
@@ -28,7 +28,9 @@ const Login = () => {
         password,
       });
       setMessage('Login successful');
-      navigate("/home");
+      sessionStorage.setItem('isAuthenticated', 'true');
+      setIsAuthenticated(true);
+      navigate("/");
     } catch (error) {
       setMessage('Login failed');
     }

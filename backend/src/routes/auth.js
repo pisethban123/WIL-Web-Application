@@ -4,6 +4,6 @@ import { registerUser, loginUser } from "../controllers/authController.js"; // E
 const router = express.Router();
 
 router.post("/register", registerUser); // Route to register a user
-router.post("/login", loginUser); // Route to find a user by username
+router.post("/login", loginUser); // Route to find a user by username and login
 
 export default router; // Export the router

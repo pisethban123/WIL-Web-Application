@@ -3,10 +3,10 @@ import jwt from "jsonwebtoken";
 
 // Function to register a new user
 export const registerUser = async (req, res) => {
-  console.log('Received registration request'); 
+  console.log("Received registration request");
   try {
     const { username, password } = req.body; // Assuming you're sending these in the body
-    const newUser = new User({ username, password}); // Include email if necessary
+    const newUser = new User({ username, password }); // Include email if necessary
     await newUser.save();
     res
       .status(201)
@@ -27,14 +27,17 @@ export const loginUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (user.password !== password) {  // In a real app, you should hash the password
+    if (user.password !== password) {
+      // In a real app, you should hash the password
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    console.log('found user'); 
+    console.log("found user");
     // Successfully logged in
     return res.status(200).json({ message: "Login successful", user });
   } catch (error) {
     console.error("Error logging in user:", error);
-    res.status(500).json({ message: "Internal server error", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 };

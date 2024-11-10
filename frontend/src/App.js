@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Login from "./pages/login";
@@ -9,6 +9,15 @@ import { createTheme, ThemeProvider } from "@mui/material";
 const App = () => {
   const [username, setUsername] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check if user is authenticated (e.g., check localStorage or cookies)
+    const storedAuth = localStorage.getItem("isAuthenticated");
+    if (storedAuth === "true") {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
   const navigate = useNavigate();
 
   const handleLogin = (username, password) => {
@@ -24,6 +33,7 @@ const App = () => {
       if (response.status === 200) {
         console.log("Logout successful");
         setIsAuthenticated(false);
+        sessionStorage.removeItem("isAuthenticated");
         navigate("/");
       } else {
         console.log("Logout failed");
@@ -47,10 +57,10 @@ const App = () => {
       <div>
         <Routes>
           <Route
-            path="/home"
+            path="/"
             element={
               isAuthenticated ? (
-                <Home username={username} onLogout={handleLogout} />
+                <Home handleLogout={handleLogout} />
               ) : (
                 <Login
                   onLogin={handleLogin}
