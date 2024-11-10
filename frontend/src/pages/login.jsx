@@ -28,7 +28,7 @@ const Login = () => {
         password,
       });
       setMessage('Login successful');
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       setMessage('Login failed');
     }
@@ -164,6 +164,7 @@ const Login = () => {
                 />
                 <Button
                   type="submit"
+                  onClick={handleSubmit}
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3 }}

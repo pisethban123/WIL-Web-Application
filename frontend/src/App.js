@@ -47,7 +47,7 @@ const App = () => {
       <div>
         <Routes>
           <Route
-            path="/"
+            path="/home"
             element={
               isAuthenticated ? (
                 <Home username={username} onLogout={handleLogout} />
