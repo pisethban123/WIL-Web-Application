@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
 import image from "../assets/signUp.jpg";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { InputAdornment, IconButton, Grid } from "@mui/material";
+import { InputAdornment, IconButton, Grid, Alert } from "@mui/material";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -31,6 +31,9 @@ const Register = () => {
     e.preventDefault();
     let hasError = false;
 
+    // Clear previous error message
+    setErrorMessage("");
+
     if (!username) {
       setUsernameError("Username is required");
       hasError = true;
@@ -48,13 +51,11 @@ const Register = () => {
     if (!confirmPass) {
       setconfrimPassError("Confirm password is required");
       hasError = true;
-    } else {
-      setconfrimPassError(null);
-    }
-
-    if (password && confirmPass && password !== confirmPass) {
+    } else if (password !== confirmPass) {
       setconfrimPassError("Passwords do not match");
       hasError = true;
+    } else {
+      setconfrimPassError("null");
     }
 
     if (!hasError) {
@@ -86,8 +87,10 @@ const Register = () => {
       ) {
         // Handle the username duplication error
         setUsernameError("Username already exists.");
+        setErrorMessage("Registration failed. Please try a different username.");
       } else {
         // Handle any other errors that occur during the API call
+        setErrorMessage("An error occurred during registration. Please try again later.");
         console.error("Error creating user:", error);
       }
   }};
@@ -151,6 +154,12 @@ const Register = () => {
               <Typography component="h1" variant="h6" fontSize={25}>
                 Register a new account
               </Typography>
+              {/* Add error message Alert */}
+            {errorMessage && (
+              <Alert severity="error" sx={{ mt: 2, mb: 2, width: '100%' }}>
+                {errorMessage}
+              </Alert>
+            )}
               <Box component="form" noValidate onSubmit={handleSubmit}>
                 <TextField
                   margin="normal"
@@ -163,6 +172,8 @@ const Register = () => {
                   autoFocus
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  error={!!usernameError}
+                  helperText={usernameError}
                   sx={{
                     "& label.Mui-focused": {
                       color: "blue",
@@ -190,6 +201,8 @@ const Register = () => {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  error={!!passwordError}
+                  helperText={passwordError}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -230,6 +243,8 @@ const Register = () => {
                   id="password"
                   value={confirmPass}
                   onChange={(e) => setConfirmPass(e.target.value)}
+                  error={!!confirmPassError}
+                  helperText={confirmPassError}
                   sx={{
                     "& label.Mui-focused": {
                       color: "blue",
