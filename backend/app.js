@@ -9,15 +9,19 @@ import connectDB from "./src/config/db.js";
 
 const app = express();
 const port = 3001;
+
+// Connect to the database
 connectDB();
 
 // Middleware
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON request bodies
-
 // Routes
 app.use("/api", authRoutes); // Use auth routes
+
+// Start the server
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-  });
+  console.log(`Server is running on http://localhost:${port}`);
+});
+
 export default app; // Export the app for use in other files

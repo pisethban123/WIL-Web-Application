@@ -31,7 +31,7 @@ export const loginUser = async (req, res) => {
       // In a real app, you should hash the password
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    console.log("found user");
+    //console.log("found user");
     // Successfully logged in
     return res.status(200).json({ message: "Login successful", user });
   } catch (error) {
