@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
 import image from "../assets/people.jpg";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { InputAdornment, IconButton, Grid } from "@mui/material";
+import { InputAdornment, IconButton, Grid, Alert } from "@mui/material";
 
 const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
@@ -22,6 +22,17 @@ const Login = ({ setIsAuthenticated }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Add form validation
+    if (!username.trim()) {
+      setMessage('Username is required');
+      return;
+    }
+    if (!password) {
+      setMessage('Password is required');
+      return;
+    }
+  
     try {
       const response = await axios.post("http://localhost:3001/api/login", {
         username,
@@ -32,7 +43,12 @@ const Login = ({ setIsAuthenticated }) => {
       setIsAuthenticated(true);
       navigate("/");
     } catch (error) {
-      setMessage('Login failed');
+      // Enhanced error messages based on common scenarios
+      if (!error.response) {
+      setMessage('Network error. Please check your connection.');
+    } else {
+      setMessage('Invalid username or password. Please try again.');
+    }
     }
   };
 
@@ -95,6 +111,13 @@ const Login = ({ setIsAuthenticated }) => {
               <Typography component="h1" variant="h6" fontSize={25}>
                 Log in to your account
               </Typography>
+              {/* Add error message Alert */}
+              {message && (
+                <Alert severity={message === 'Login successful' ? 'success' : 'error'} 
+                    sx={{ mt: 2, mb: 2 }}>
+                  {message}
+                </Alert>
+              )}
               <Box component="form" noValidate onSubmit={handleSubmit}>
                 <TextField
                   margin="normal"
@@ -106,7 +129,10 @@ const Login = ({ setIsAuthenticated }) => {
                   name="username"
                   autoFocus
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                    setMessage(''); // Clear error message when typing
+                  }}
                   sx={{
                     "& label.Mui-focused": {
                       color: "blue",
@@ -133,7 +159,10 @@ const Login = ({ setIsAuthenticated }) => {
                   type={showPassword ? "text" : "password"}
                   id="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                    setMessage(''); // Clear error message when typing
+                  }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
