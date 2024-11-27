@@ -254,7 +254,7 @@ const Register = () => {
                 autoFocus
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                error={!!usernameError}
+                error={usernameError}
                 helperText={usernameError}
                 sx={{
                   "& label.Mui-focused": {
@@ -283,7 +283,7 @@ const Register = () => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                error={!!passwordError}
+                error={passwordError}
                 helperText={passwordError}
                 InputProps={{
                   endAdornment: (
@@ -325,7 +325,7 @@ const Register = () => {
                 id="password"
                 value={confirmPass}
                 onChange={(e) => setConfirmPass(e.target.value)}
-                error={!!confirmPassError}
+                error={confirmPassError}
                 helperText={confirmPassError}
                 sx={{
                   "& label.Mui-focused": {
