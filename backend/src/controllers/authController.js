@@ -5,8 +5,9 @@ import jwt from "jsonwebtoken";
 export const registerUser = async (req, res) => {
   console.log("Received registration request");
   try {
-    const { username, password } = req.body; // Assuming you're sending these in the body
-    const newUser = new User({ username, password }); // Include email if necessary
+    const { username, password, firstName, lastName } = req.body; // Assuming you're sending these in the body
+    const type = "user";
+    const newUser = new User({ username, password, type, firstName, lastName }); // Include email if necessary
     await newUser.save();
     res
       .status(201)

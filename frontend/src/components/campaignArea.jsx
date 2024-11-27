@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import CampaignCard from "./campaignCard";
-function Campaigns() {
+const Campaigns = () => {
   return (
     <>
       <Grid container direction="row" spacing={2}>
@@ -34,6 +34,6 @@ function Campaigns() {
       </Grid>
     </>
   );
-}
+};
 
 export default Campaigns;

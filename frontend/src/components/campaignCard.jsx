@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import image from "../assets/campaign.jpg";
 
-export default function CampaignCard() {
+const CampaignCard = () => {
   return (
     <Card sx={{ maxWidth: 400 }}>
       <CardActionArea>
@@ -22,4 +22,6 @@ export default function CampaignCard() {
       </CardActionArea>
     </Card>
   );
-}
+};
+
+export default CampaignCard;
