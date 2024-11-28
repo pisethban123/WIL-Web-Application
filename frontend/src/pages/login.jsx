@@ -46,7 +46,14 @@ const Login = ({ setIsAuthenticated }) => {
       setMessage("Login successful");
       sessionStorage.setItem("isAuthenticated", "true");
       setIsAuthenticated(true);
-      navigate("/");
+      // Redirect based on user type
+       if (user.type === "admin") {
+        navigate("/login");
+      } else if (user.type === "user") {
+        navigate("/register");
+      } else {
+        navigate("/"); // Default redirection
+      }
     } catch (error) {
       // Enhanced error messages based on common scenarios
       if (!error.response) {
