@@ -38,6 +38,11 @@ const Login = ({ setIsAuthenticated }) => {
         username,
         password,
       });
+      const { user } = response.data;
+
+      // Log the user type to the browser console for testing
+      console.log(`Logged in as ${user.username} with type: ${user.type}`);
+
       setMessage("Login successful");
       sessionStorage.setItem("isAuthenticated", "true");
       setIsAuthenticated(true);

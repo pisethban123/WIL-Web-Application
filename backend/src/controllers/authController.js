@@ -34,7 +34,13 @@ export const loginUser = async (req, res) => {
     }
     //console.log("found user");
     // Successfully logged in
-    return res.status(200).json({ message: "Login successful", user });
+    // Log the user type to the terminal for testing
+    console.log(`User type for ${username}: ${user.type}`);
+     // Return the user type in the response
+     const { type } = user;
+     return res
+       .status(200)
+       .json({ message: "Login successful", user: { username, type } });
   } catch (error) {
     console.error("Error logging in user:", error);
     res
