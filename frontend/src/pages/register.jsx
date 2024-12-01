@@ -118,7 +118,7 @@ const Register = () => {
   };
 
   const toLogin = () => {
-    navigate("/login"); // Navigate to login page
+    navigate("/"); // Navigate to login page
   };
 
   const Background = styled("div")({

@@ -47,10 +47,10 @@ const Login = ({ setIsAuthenticated }) => {
       sessionStorage.setItem("isAuthenticated", "true");
       setIsAuthenticated(true);
       // Redirect based on user type
-       if (user.type === "admin") {
-        navigate("/login");
+      if (user.type === "admin") {
+        navigate("/adminHome");
       } else if (user.type === "user") {
-        navigate("/register");
+        navigate("/userHome");
       } else {
         navigate("/"); // Default redirection
       }

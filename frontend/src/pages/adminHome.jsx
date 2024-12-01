@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import { CssBaseline, Box, Grid, Typography } from "@mui/material";
 import Campaigns from "../components/campaignArea";
 
-const Home = ({ handleLogout }) => {
+const AdminHome = ({ handleLogout }) => {
   return (
     <Box sx={{ p: 6, justifyContent: "flex-start" }}>
       <CssBaseline />
@@ -29,7 +29,7 @@ const Home = ({ handleLogout }) => {
             md={6}
             lg={6}
           >
-            <Typography variant="h3">Welcome!</Typography>
+            <Typography variant="h3">Welcome Admin!</Typography>
           </Grid>
 
           <Grid
@@ -67,4 +67,4 @@ const Home = ({ handleLogout }) => {
   );
 };
 
-export default Home;
+export default AdminHome;

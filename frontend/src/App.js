@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Login from "./pages/login";
-import Home from "./pages/home";
+import AdminHome from "./pages/adminHome";
+import UserHome from "./pages/userHome";
 import Register from "./pages/register";
 import { createTheme, ThemeProvider } from "@mui/material";
 
@@ -26,13 +26,12 @@ const App = () => {
 
   const handleLogout = async () => {
     try {
-      
-        setIsAuthenticated(false);
-        sessionStorage.removeItem("isAuthenticated");
-        navigate("/");
-      } catch (error) {
-        console.error("Logout failed", error);
-      }
+      setIsAuthenticated(false);
+      sessionStorage.removeItem("isAuthenticated");
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
   };
 
   const theme = createTheme({
@@ -51,28 +50,19 @@ const App = () => {
           <Route
             path="/"
             element={
-              isAuthenticated ? (
-                <Home handleLogout={handleLogout} />
-              ) : (
-                <Login
-                  onLogin={handleLogin}
-                  setIsAuthenticated={setIsAuthenticated}
-                />
-              )
+              <Login
+                onLogin={handleLogin}
+                setIsAuthenticated={setIsAuthenticated}
+              />
             }
           />
           <Route
-            path="/login"
-            element={
-              isAuthenticated ? (
-                <Login
-                  onLogin={handleLogin}
-                  setIsAuthenticated={setIsAuthenticated}
-                />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
+            path="/adminHome"
+            element={<AdminHome handleLogout={handleLogout} />}
+          />
+          <Route
+            path="/userHome"
+            element={<UserHome handleLogout={handleLogout} />}
           />
           <Route
             path="/register"
