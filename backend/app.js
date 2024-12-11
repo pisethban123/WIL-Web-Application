@@ -5,6 +5,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import authRoutes from "./src/routes/auth.js"; // Import the auth routes
+import campaignRoutes from "./src/routes/campaignRoutes.js";
 import connectDB from "./src/config/db.js";
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.json()); // Middleware to parse JSON request bodies
 // Routes
 app.use("/api", authRoutes); // Use auth routes
+app.use("/api", campaignRoutes); // Use campaign routes
 
 // Start the server
 app.listen(port, () => {
