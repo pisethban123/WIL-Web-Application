@@ -47,3 +47,18 @@ export const getAllCampaigns = async (req, res) => {
       res.status(500).json({ message: "Error retrieving campaign", error: error.message });
     }
   };
+  
+// Function to get all campaigns with "pending" status
+  export const getPendingCampaigns = async (req, res) => {
+    try {
+      // Query campaigns with status "pending"
+      const pendingCampaigns = await Campaign.find({ status: "pending" });
+  
+      // Respond with the list of pending campaigns
+      res.status(200).json(pendingCampaigns);
+    } catch (error) {
+      // Handle errors during the query
+      console.error("Error fetching pending campaigns:", error);
+      res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+  };

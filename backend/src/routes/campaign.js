@@ -1,5 +1,5 @@
 import express from "express";
-import { createCampaign, getAllCampaigns, getCampaignById } from "../controllers/campaignController.js";
+import { createCampaign, getAllCampaigns, getCampaignById, getPendingCampaigns} from "../controllers/campaignController.js";
 
 const router = express.Router();
 
@@ -12,4 +12,8 @@ router.get("/campaigns", getAllCampaigns);
 // Get campaign by ID
 router.get("/campaigns/:id", getCampaignById);
 
-export default router;
+// Route to get all pending campaigns
+router.get("/campaigns/pending", getPendingCampaigns);
+
+
+export default router; 
