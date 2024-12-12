@@ -47,7 +47,7 @@ export const getAllCampaigns = async (req, res) => {
       res.status(500).json({ message: "Error retrieving campaign", error: error.message });
     }
   };
-  
+
 // Function to get all campaigns with "pending" status
   export const getPendingCampaigns = async (req, res) => {
     try {
@@ -59,6 +59,31 @@ export const getAllCampaigns = async (req, res) => {
     } catch (error) {
       // Handle errors during the query
       console.error("Error fetching pending campaigns:", error);
+      res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+  };
+
+  // Function to update the status of a campaign from "pending" to "approved"
+  export const approveCampaign = async (req, res) => {
+    const { id } = req.params; // Extract campaign ID from request parameters
+
+    try {
+      // Find the campaign by ID and update its status to "approved"
+      const updatedCampaign = await Campaign.findByIdAndUpdate(
+        id,
+        { status: "approved" },
+        { new: true } // Return the updated document
+      );
+
+      if (!updatedCampaign) {
+       return res.status(404).json({ message: "Campaign not found" });
+      }
+
+      // Respond with the updated campaign
+      res.status(200).json({ message: "Campaign approved successfully", campaign: updatedCampaign });
+    } catch (error) {
+      // Handle errors during the update
+      console.error("Error approving campaign:", error);
       res.status(500).json({ message: "Internal server error", error: error.message });
     }
   };
