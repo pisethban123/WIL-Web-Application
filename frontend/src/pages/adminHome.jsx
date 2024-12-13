@@ -1,11 +1,20 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import { CssBaseline, Box, Grid, Typography } from "@mui/material";
-import Campaigns from "../components/campaignArea";
+import CampaignCard from "../components/campaignCard";
+import { useNavigate } from "react-router-dom";
 
 const AdminHome = ({ handleLogout }) => {
+  const navigate = useNavigate();
+
+  const toReview = () => {
+    navigate("/review"); // Navigate to review campaign page
+  };
+
+  const username = "test";
+
   return (
-    <Box sx={{ p: 6, justifyContent: "flex-start" }}>
+    <Box sx={{ p: 10, justifyContent: "flex-start" }}>
       <CssBaseline />
       <Box
         component="main"
@@ -16,8 +25,8 @@ const AdminHome = ({ handleLogout }) => {
               : theme.palette.common.white,
         }}
       >
+        {/*Header*/}
         <Grid container direction="row">
-          {/*Header*/}
           <Grid
             item
             container
@@ -29,7 +38,7 @@ const AdminHome = ({ handleLogout }) => {
             md={6}
             lg={6}
           >
-            <Typography variant="h3">Welcome Admin!</Typography>
+            <Typography variant="h3">Welcome {username}!</Typography>
           </Grid>
 
           <Grid
@@ -37,7 +46,7 @@ const AdminHome = ({ handleLogout }) => {
             container
             direction="column"
             alignItems="flex-end"
-            justifyContent="flex-start"
+            justifyContent="flex-end"
             xs={6}
             sm={6}
             md={6}
@@ -54,11 +63,21 @@ const AdminHome = ({ handleLogout }) => {
           </Grid>
         </Grid>
 
+        {/*Review campaign button*/}
+        <Button
+          type="submit"
+          onClick={toReview}
+          variant="contained"
+          sx={{ mt: 3 }}
+        >
+          <Typography variant="h6">Review</Typography>
+        </Button>
+
+        {/*Campaigns*/}
         <Grid container direction="row" sx={{ marginTop: 5 }}>
-          {/*Button Area*/}
           <Grid container spacing={4} xs={12} sm={12} md={12} lg={12}>
             <Grid item xs={12} sm={12} md={12} lg={12}>
-              <Campaigns />
+              <CampaignCard />
             </Grid>
           </Grid>
         </Grid>

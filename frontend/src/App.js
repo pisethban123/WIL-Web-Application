@@ -4,6 +4,9 @@ import Login from "./pages/login";
 import AdminHome from "./pages/adminHome";
 import UserHome from "./pages/userHome";
 import Register from "./pages/register";
+import Review from "./pages/review";
+import Post from "./pages/post";
+import CampaignDetails from "./pages/campaignDetail";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 const App = () => {
@@ -57,6 +60,15 @@ const App = () => {
             }
           />
           <Route
+            path="/login"
+            element={
+              <Login
+                onLogin={handleLogin}
+                setIsAuthenticated={setIsAuthenticated}
+              />
+            }
+          />
+          <Route
             path="/adminHome"
             element={<AdminHome handleLogout={handleLogout} />}
           />
@@ -75,6 +87,17 @@ const App = () => {
               />
             }
           />
+          <Route
+            path="/post"
+            element={
+              <Post
+                username={username}
+                setIsAuthenticated={setIsAuthenticated}
+              />
+            }
+          />
+          <Route path="/review" element={<Review />} />
+          <Route path="/campaign/:id" element={<CampaignDetails />} />
         </Routes>
       </div>
     </ThemeProvider>

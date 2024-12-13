@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Button, { ButtonProps } from "@mui/material/Button";
+import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -9,7 +9,8 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
 import image from "../assets/signUp.jpg";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { InputAdornment, IconButton, Grid, Alert } from "@mui/material";
+import { InputAdornment, IconButton, Alert } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 
 const Register = () => {
   const [username, setUsername] = useState("");

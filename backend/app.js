@@ -5,7 +5,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import authRoutes from "./src/routes/auth.js"; // Import the auth routes
-import campaignRoutes from "./src/routes/campaignRoutes.js";
+import campaignRoutes from "./src/routes/campaign.js";
 import connectDB from "./src/config/db.js";
 
 const app = express();

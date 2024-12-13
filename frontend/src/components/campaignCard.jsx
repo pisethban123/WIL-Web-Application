@@ -1,26 +1,62 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import image from "../assets/campaign.jpg";
+import { Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const CampaignCard = () => {
+  const [campaigns, setCampaigns] = useState([]);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleCardClick = (id) => {
+    navigate(`/campaign/${id}`);
+  };
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3001/api/getAllCampaigns"
+        );
+        setCampaigns(response.data);
+      } catch (err) {
+        console.error("Error fetching campaigns:", err);
+        setError("Failed to load campaigns. Please try again later.");
+      }
+    };
+
+    fetchCampaigns();
+  }, []);
+
   return (
-    <Card sx={{ maxWidth: 400 }}>
-      <CardActionArea>
-        <CardMedia component="img" height="150" image={image} />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Campaign
-          </Typography>
-          <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            Description
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <div>
+      <Grid
+        container
+        direction="row"
+        spacing={1} // Add spacing between items
+      >
+        {campaigns.map((campaign) => (
+          <Grid item xs={12} sm={6} md={4} lg={2} key={campaign._id}>
+            <Card sx={{ maxWidth: 400 }}>
+              <CardActionArea onClick={() => handleCardClick(campaign._id)}>
+                <CardMedia component="img" height="180" image={image} />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {campaign.title}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </div>
   );
 };
 

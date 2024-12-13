@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -39,18 +39,13 @@ const Login = ({ setIsAuthenticated }) => {
         password,
       });
       const { user } = response.data;
-
-      // Log the user type to the browser console for testing
-      console.log(`Logged in as ${user.username} with type: ${user.type}`);
-
       setMessage("Login successful");
-      sessionStorage.setItem("isAuthenticated", "true");
       setIsAuthenticated(true);
       // Redirect based on user type
       if (user.type === "admin") {
         navigate("/adminHome");
       } else if (user.type === "user") {
-        navigate("/userHome");
+        navigate("/userHome", { state: { username: user.username } });
       } else {
         navigate("/"); // Default redirection
       }
@@ -108,7 +103,6 @@ const Login = ({ setIsAuthenticated }) => {
           mb: "10%",
           mr: "4%",
           ml: "4%",
-          backgroundColor: "##F1F0F0",
         }}
       >
         <Box

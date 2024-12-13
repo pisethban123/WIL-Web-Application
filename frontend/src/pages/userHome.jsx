@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
 import { CssBaseline, Box, Grid, Typography } from "@mui/material";
-import Campaigns from "../components/campaignArea";
+import CampaignCard from "../components/campaignCard";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UserHome = ({ handleLogout }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { username } = location.state; // Access the username from state
+
+  const toPost = () => {
+    navigate("/post", { state: { username: username } }); // Navigate to review campaign page
+  };
+
   return (
-    <Box sx={{ p: 6, justifyContent: "flex-start" }}>
+    <Box sx={{ p: 10, justifyContent: "flex-start" }}>
       <CssBaseline />
       <Box
         component="main"
@@ -29,7 +38,7 @@ const UserHome = ({ handleLogout }) => {
             md={6}
             lg={6}
           >
-            <Typography variant="h3">Welcome User!</Typography>
+            <Typography variant="h3">Welcome {username}!</Typography>
           </Grid>
 
           <Grid
@@ -47,18 +56,28 @@ const UserHome = ({ handleLogout }) => {
               type="submit"
               onClick={handleLogout}
               variant="contained"
-              sx={{ mt: 3 }}
+              sx={{ mt: 3, mr: 4 }}
             >
               <Typography variant="h6">Log out</Typography>
             </Button>
           </Grid>
         </Grid>
 
+        {/*Post campaign button*/}
+        <Button
+          type="submit"
+          onClick={toPost}
+          variant="contained"
+          sx={{ mt: 3 }}
+        >
+          <Typography variant="h6">Post</Typography>
+        </Button>
+
         <Grid container direction="row" sx={{ marginTop: 5 }}>
-          {/*Button Area*/}
+          {/*Campaign Area*/}
           <Grid container spacing={4} xs={12} sm={12} md={12} lg={12}>
             <Grid item xs={12} sm={12} md={12} lg={12}>
-              <Campaigns />
+              <CampaignCard />
             </Grid>
           </Grid>
         </Grid>
