@@ -5,6 +5,7 @@ import { Typography, Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import image from "../assets/campaign.jpg";
 import Button from "@mui/material/Button";
+import { blueGrey } from "@mui/material/colors";
 
 const CampaignDetails = () => {
   const { id } = useParams(); // Get the campaign ID from the URL
@@ -56,46 +57,16 @@ const CampaignDetails = () => {
               : theme.palette.common.white,
         }}
       >
-        <Grid item>
-          <Button
-            onClick={() => navigate(-1)}
-            variant="outlined"
-            sx={{ mt: 3 }}
-          >
-            <Typography variant="body1">Back</Typography>
-          </Button>
-        </Grid>
-        {/*Header*/}
-        <Grid
-          item
-          container
-          direction="column"
-          alignItems="flex-start"
-          justifyContent="flex-start"
-          xs={6}
-          sm={6}
-          md={6}
-          lg={6}
-        >
-          <Typography variant="h3">
-            {campaign.title} - {campaign.category}
-          </Typography>
-        </Grid>
-
-        {/*Review campaign button*/}
-        <Grid
-          item
-          container
-          direction="column"
-          alignItems="flex-start"
-          justifyContent="flex-start"
-          xs={6}
-          sm={6}
-          md={6}
-          lg={6}
-        >
-          <Typography variant="h6">{campaign.createdBy}</Typography>
-        </Grid>
+        <Button onClick={() => navigate(-1)} variant="outlined" sx={{ mb: 2 }}>
+          <Typography variant="body1">Back</Typography>
+        </Button>
+        <Typography variant="h3">{campaign.title}</Typography>
+        <Typography variant="h4" sx={{ color: "grey" }}>
+          {campaign.category}
+        </Typography>
+        <Typography variant="h6" sx={{ color: blueGrey[800] }}>
+          Posted by: {campaign.createdBy}
+        </Typography>
         <Grid
           item
           container

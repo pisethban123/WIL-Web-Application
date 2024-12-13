@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import { CssBaseline, Box, Grid, Typography } from "@mui/material";
 import CampaignCard from "../components/campaignCard";
 import { useNavigate } from "react-router-dom";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 
 const AdminHome = ({ handleLogout }) => {
   const navigate = useNavigate();
@@ -46,19 +47,19 @@ const AdminHome = ({ handleLogout }) => {
             container
             direction="column"
             alignItems="flex-end"
-            justifyContent="flex-end"
+            justifyContent="flex-start"
             xs={6}
             sm={6}
             md={6}
             lg={6}
           >
             <Button
-              type="submit"
               onClick={handleLogout}
               variant="contained"
-              sx={{ mt: 3 }}
+              sx={{ mt: 1, mr: 4 }}
+              startIcon={<MeetingRoomIcon />}
             >
-              <Typography variant="h6">Log out</Typography>
+              <Typography variant="h7">Log out</Typography>
             </Button>
           </Grid>
         </Grid>

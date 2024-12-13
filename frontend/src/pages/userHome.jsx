@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import { CssBaseline, Box, Grid, Typography } from "@mui/material";
 import CampaignCard from "../components/campaignCard";
 import { useLocation, useNavigate } from "react-router-dom";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 
 const UserHome = ({ handleLogout }) => {
   const location = useLocation();
@@ -53,12 +54,12 @@ const UserHome = ({ handleLogout }) => {
             lg={6}
           >
             <Button
-              type="submit"
               onClick={handleLogout}
               variant="contained"
-              sx={{ mt: 3, mr: 4 }}
+              sx={{ mt: 1, mr: 4 }}
+              startIcon={<MeetingRoomIcon />}
             >
-              <Typography variant="h6">Log out</Typography>
+              <Typography variant="h7">Log out</Typography>
             </Button>
           </Grid>
         </Grid>

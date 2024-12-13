@@ -7,6 +7,7 @@ import Register from "./pages/register";
 import Review from "./pages/review";
 import Post from "./pages/post";
 import CampaignDetails from "./pages/campaignDetail";
+import CampaignReview from "./pages/campaignReview";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 const App = () => {
@@ -98,6 +99,7 @@ const App = () => {
           />
           <Route path="/review" element={<Review />} />
           <Route path="/campaign/:id" element={<CampaignDetails />} />
+          <Route path="/campaignReview/:id" element={<CampaignReview />} />
         </Routes>
       </div>
     </ThemeProvider>

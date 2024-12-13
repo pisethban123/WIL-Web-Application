@@ -9,20 +9,20 @@ import image from "../assets/campaign.jpg";
 import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const CampaignCard = () => {
+const CampaignReview = () => {
   const [campaigns, setCampaigns] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleCardClick = (id) => {
-    navigate(`/campaign/${id}`);
+    navigate(`/campaignReview/${id}`);
   };
 
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/campaigns/approved"
+          "http://localhost:3001/api/campaigns/pending"
         );
         setCampaigns(response.data);
       } catch (err) {
@@ -60,4 +60,4 @@ const CampaignCard = () => {
   );
 };
 
-export default CampaignCard;
+export default CampaignReview;

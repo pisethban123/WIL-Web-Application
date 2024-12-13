@@ -9,8 +9,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
 import image from "../assets/signUp.jpg";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { InputAdornment, IconButton, Alert } from "@mui/material";
-import Grid from "@mui/material/Grid2";
+import { InputAdornment, IconButton, Alert, Grid } from "@mui/material";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -179,7 +178,7 @@ const Register = () => {
             </Typography>
             {/* Add error message Alert */}
             {errorMessage && (
-              <Alert severity="error" sx={{ mt: 2, mb: 2, width: "100%" }}>
+              <Alert severity="error" sx={{ mt: 2, mb: 2 }}>
                 {errorMessage}
               </Alert>
             )}

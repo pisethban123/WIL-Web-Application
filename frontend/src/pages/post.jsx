@@ -1,85 +1,48 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { Alert, Grid } from "@mui/material";
+import {
+  Button,
+  CssBaseline,
+  TextField,
+  Box,
+  Typography,
+  Alert,
+  Grid,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "@mui/system";
-import image from "../assets/people.jpg";
+import image from "../assets/post.jpg";
 
 const Post = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  const [createdBy, setCreatedBy] = useState("");
-  const [status, setStatus] = useState("pending");
   const [message, setMessage] = useState("");
-
-  //  set error states
   const [errorMessage, setErrorMessage] = useState("");
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [openReviewDialog, setOpenReviewDialog] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { username } = location.state;
-  //const { user } = useContext(UserContext);
 
   const handleSubmit = (e) => {
-    console.log("Form submitted");
     e.preventDefault();
-    let hasError = false;
-
-    // Clear previous error message
+    // Clear previous error messages
     setErrorMessage("");
-    if (!title) {
-      setErrorMessage("This required field is empty");
-      hasError = true;
-    } else {
-      setErrorMessage(null);
-    }
-    if (!description) {
-      setErrorMessage("This required field is empty");
-      hasError = true;
-    } else {
-      setErrorMessage(null);
-    }
-    if (!title) {
-      setErrorMessage("This required field is empty");
-      hasError = true;
-    } else {
-      setErrorMessage(null);
-    }
-    if (!hasError) {
-      handleConfirm();
+
+    if (!title || !category || !description) {
+      setErrorMessage("All fields are required.");
+      return;
     }
   };
 
   const handleConfirm = async () => {
-    // Send the form data to the backend API
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/createCampaign",
-        {
-          title,
-          category,
-          description,
-          createdBy: username,
-          status: "pending",
-        }
-      );
-      console.log("post username", username);
-      if (response.status === 201) {
-        const { campaign } = response.data;
-        console.log("Campaign created successfully:", campaign);
-        //navigate to home page after submitting form
-        navigate("/userhome", { state: { username: username } });
-      }
-    } catch (error) {
-      // Handle any other errors that occur during the API call
-      setErrorMessage("An error occurred. Please try again later.");
-      console.log(error);
-    }
+    setOpenConfirmDialog(true);
   };
 
   const Background = styled("div")({
@@ -118,11 +81,7 @@ const Post = () => {
         md={4}
         lg={4}
         position="relative"
-        sx={{
-          mb: "10%",
-          mr: "4%",
-          ml: "4%",
-        }}
+        sx={{ mb: "10%", mr: "4%" }}
       >
         <Box
           sx={{
@@ -136,7 +95,6 @@ const Post = () => {
             <Typography component="h1" variant="h6" fontSize={25}>
               Post a Campaign
             </Typography>
-            {/* Add error message Alert */}
             {errorMessage && (
               <Alert severity="error" sx={{ mt: 2, mb: 2, width: "100%" }}>
                 {errorMessage}
@@ -154,8 +112,6 @@ const Post = () => {
                 autoFocus
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                error={errorMessage}
-                helperText={errorMessage}
                 sx={{
                   "& label.Mui-focused": {
                     color: "blue",
@@ -182,8 +138,6 @@ const Post = () => {
                 name="Category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                error={errorMessage}
-                helperText={errorMessage}
                 sx={{
                   "& label.Mui-focused": {
                     color: "blue",
@@ -211,8 +165,6 @@ const Post = () => {
                 name="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                error={errorMessage}
-                helperText={errorMessage}
                 sx={{
                   "& label.Mui-focused": {
                     color: "blue",
@@ -259,6 +211,72 @@ const Post = () => {
           </Box>
         </Box>
       </Grid>
+      // First confirmation dialog
+      <Dialog
+        open={openConfirmDialog}
+        onClose={() => setOpenConfirmDialog(false)}
+      >
+        <DialogTitle>Confirm Post</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to post this campaign?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenConfirmDialog(false)} color="primary">
+            Cancel
+          </Button>
+          <Button
+            onClick={async () => {
+              // Proceed to handle the campaign post
+              try {
+                const response = await axios.post(
+                  "http://localhost:3001/api/createCampaign",
+                  {
+                    title,
+                    category,
+                    description,
+                    createdBy: username,
+                    status: "pending",
+                  }
+                );
+                if (response.status === 201) {
+                  setOpenConfirmDialog(false); // Close the first dialog
+                  setOpenReviewDialog(true); // Open the second dialog
+                }
+              } catch (error) {
+                setErrorMessage("An error occurred. Please try again later.");
+                console.log(error);
+              }
+            }}
+            color="primary"
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
+      // Second confirmation dialog (for admin approval)
+      <Dialog
+        open={openReviewDialog}
+        onClose={() => setOpenReviewDialog(false)}
+      >
+        <DialogTitle>Campaign Under Review</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Your campaign is currently under review and awaiting approval from
+            the admin.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setOpenReviewDialog(false);
+              navigate("/userhome", { state: { username: username } });
+            }}
+            color="primary"
+          >
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   );
 };
