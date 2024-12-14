@@ -9,7 +9,7 @@ import campaignRoutes from "./src/routes/campaign.js";
 import connectDB from "./src/config/db.js";
 
 const app = express();
-const port = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Connect to the database
 connectDB();
@@ -22,8 +22,6 @@ app.use("/api", authRoutes); // Use auth routes
 app.use("/api", campaignRoutes); // Use campaign routes
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 export default app; // Export the app for use in other files
