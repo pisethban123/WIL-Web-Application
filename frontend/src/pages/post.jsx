@@ -253,7 +253,6 @@ const Post = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      // Second confirmation dialog (for admin approval)
       <Dialog
         open={openReviewDialog}
         onClose={() => setOpenReviewDialog(false)}
