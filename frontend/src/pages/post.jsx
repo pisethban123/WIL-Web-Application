@@ -228,7 +228,7 @@ const Post = () => {
               // Proceed to handle the campaign post
               try {
                 const response = await axios.post(
-                  "http://localhost:3001/api/createCampaign",
+                  "https://wil-web-application.onrender.com/api/createCampaign",
                   {
                     title,
                     category,
