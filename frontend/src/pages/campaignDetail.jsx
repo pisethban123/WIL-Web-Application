@@ -22,7 +22,7 @@ const CampaignDetails = () => {
     const fetchCampaign = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/getCampaignById/${id}`
+          `https://wil-web-application.onrender.com/api/getCampaignById//${id}`
         );
         if (response.data) {
           setCampaign(response.data);
