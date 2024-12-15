@@ -83,7 +83,7 @@ const Register = () => {
     // Send the form data to the backend API
 
     try {
-      const response = await axios.post("http://localhost:3001/api/register", {
+      const response = await axios.post("https://wil-web-application.onrender.com/api/register", {
         username,
         password,
         type,

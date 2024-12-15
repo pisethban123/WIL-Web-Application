@@ -35,7 +35,7 @@ const CampaignReview = () => {
     const fetchCampaign = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/getCampaignById/${id}`
+          `https://wil-web-application.onrender.com/api/getCampaignById/${id}`
         );
         if (response.data) {
           setCampaign(response.data);
@@ -55,12 +55,12 @@ const CampaignReview = () => {
     try {
       if (dialogConfig.action === "approve") {
         const response = await axios.get(
-          `http://localhost:3001/api/campaigns/${id}/approve`
+          `https://wil-web-application.onrender.com/api/campaigns/${id}/approve`
         );
         console.log(response.data.message); // Success message from backend
       } else if (dialogConfig.action === "decline") {
         const response = await axios.delete(
-          `http://localhost:3001/api/campaigns/${id}/decline`
+          `https://wil-web-application.onrender.com/api/campaigns/${id}/decline`
         );
         console.log(response.data.message); // Success message from backend
       }
