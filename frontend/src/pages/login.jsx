@@ -43,7 +43,7 @@ const Login = ({ setIsAuthenticated }) => {
       setIsAuthenticated(true);
       // Redirect based on user type
       if (user.type === "admin") {
-        navigate("/adminHome");
+        navigate("/adminHome", { state: { username: user.username } });
       } else if (user.type === "user") {
         navigate("/userHome", { state: { username: user.username } });
       } else {

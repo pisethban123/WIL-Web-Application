@@ -2,17 +2,18 @@ import React from "react";
 import Button from "@mui/material/Button";
 import { CssBaseline, Box, Grid, Typography } from "@mui/material";
 import CampaignCard from "../components/campaignCard";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 
 const AdminHome = ({ handleLogout }) => {
+  const location = useLocation();
   const navigate = useNavigate();
 
   const toReview = () => {
     navigate("/review"); // Navigate to review campaign page
   };
 
-  const username = "test";
+  const { username } = location.state; // Access the username from state
 
   return (
     <Box sx={{ p: 10, justifyContent: "flex-start" }}>
