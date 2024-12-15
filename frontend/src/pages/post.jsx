@@ -211,7 +211,6 @@ const Post = () => {
           </Box>
         </Box>
       </Grid>
-      // First confirmation dialog
       <Dialog
         open={openConfirmDialog}
         onClose={() => setOpenConfirmDialog(false)}
